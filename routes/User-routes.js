@@ -87,7 +87,6 @@ router.post('/login', async(req, res, next) => {
                     res.cookie("jwt", token, {
                         httpOnly: process.env.TESTING ? false : true,
                         sameSite: 'strict',
-                        secure,
                         maxAge: expiry,
                         expires: new Date(Date.now() + expiry)
                     }).status(200).json({ message: 'Login successfull', expiresIn: expiry });
