@@ -1,0 +1,63 @@
+.login-page-whole-screen-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.login-form-wrapper {
+    width: 30%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.login-form-caption {
+    margin-top: 0.5rem;
+}
+
+.login-form-separator-line {
+    width: 200%;
+    height: 1px;
+    transform: translateX(-25%);
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 1.3rem 0;
+}
+
+.login-form-input-label,
+.login-form-input {
+    display: block;
+}
+
+.login-form-input-label {
+    margin-bottom: 5px;
+}
+
+.login-form-input {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.login-form-input:focus {
+    outline: none;
+}
+
+.login-form-submit-btn {
+    margin-top: 1rem;
+    padding: 0.65rem 1.25rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.login-form-input-wrapper {
+    width: 70%;
+}
+
+.login-form-password-input-wrapper {
+    position: relative;
+}
+
+.login-form-input-eye-icon {
+    position: absolute;
+    top: -2px;
+    right: -15px;
+    cursor: pointer;
+}

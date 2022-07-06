@@ -1,0 +1,20 @@
+.bottom-right-card-anim {
+    animation-name: bottom-right-card-animation;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes bottom-right-card-animation {
+    0% {
+        right: -100%;
+    }
+    17.5% {
+        right: 0;
+    }
+    82.5% {
+        right: 0;
+    }
+    100% {
+        right: -100%;
+    }
+}

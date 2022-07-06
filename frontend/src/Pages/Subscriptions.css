@@ -1,0 +1,16 @@
+.subscriptions-page-whole-screen-wrapper {
+    width: 100%;
+}
+
+.subscriptions-wrapper {
+    overflow: hidden;
+}
+
+.subscription-plan-wrapper {
+    margin-bottom: 1rem;
+    justify-content: space-between;
+}
+
+.subscription-plan-pricing-caption {
+    margin-bottom: 0.25rem;
+}

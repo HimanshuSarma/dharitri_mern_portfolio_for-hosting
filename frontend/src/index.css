@@ -1,0 +1,159 @@
+:root {
+    --light_green_hex: #A8CF37;
+    --light_green_rgb: rgb(168, 207, 55);
+    --light_pink_hex: #D9ACC7;
+    --light_pink_rgb: rgb(217, 172, 199);
+    --light_blue_hex: #A3BBCA;
+    --light_blue_rgb: rgb(163, 187, 202);
+    --dark_green_rgb_2: rgb(139, 195, 74);
+    --dark_green_hex_2: #8bc34a;
+    --dark_green_hex: #4CA843;
+    --dark_green_rgb: rgb(76, 168, 67);
+    --darker_green_hex: #2b5d26;
+    --darker_green_hex_2: #388e3c;
+    --dark_blue_hex: #8EADC5;
+    --dark_blue_rgb: rgb(142, 173, 197);
+    --dark_black_hex: #333333;
+    --dark_black_rgb: rgb(51, 51, 51);
+    --grey_hex: #9b9999;
+    --brown_hex: #D09341;
+    --brown_rgb: rgb(208, 147, 65);
+    --light_brown_hex: #ae7a37;
+}
+
+body {
+    margin: 0 auto;
+    max-width: calc(100vw - 17px);
+    /* height: 100vh; */
+    /* background-image: linear-gradient(to top right, var(--light_green_hex) 45%, var(--brown_hex) 65%, var(--dark_green_hex));
+    background-repeat: no-repeat; */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+a,
+button {
+    cursor: pointer;
+}
+
+img {
+    object-fit: cover;
+}
+
+.width-limit-center {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 80rem;
+}
+
+.main-component-margin {
+    margin: 13rem auto 5rem auto;
+}
+
+.form-input {
+    height: 1.25rem;
+    padding: 0 0.35rem;
+}
+
+.roboto-font {
+    font-family: 'Roboto';
+}
+
+.font-wt-400 {
+    font-weight: 400;
+}
+
+.font-wt-700 {
+    font-weight: 700;
+}
+
+.rounded-dark-green-background-white-text-btn {
+    color: white;
+    background-color: var(--dark_green_hex_2);
+    padding: 1rem 1.5rem;
+    border-radius: 25px;
+    border: none;
+    transition: background-color 0.25s;
+}
+
+.rounded-dark-green-background-white-text-btn:hover {
+    background-color: var(--dark_green_hex);
+}
+
+.product-stock-dropdown {
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-size: 0.85rem;
+    min-width: 2.75rem;
+    margin-right: 1rem;
+    padding: 0.15rem 0.25rem;
+    border-radius: 7px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s;
+}
+
+.product-stock-dropdown:active,
+.product-stock-dropdown:hover,
+.product-stock-dropdown:focus {
+    outline: none;
+}
+
+.page-main-header {
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.success-message {
+    padding: 0.5rem;
+    color: wheat;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-align-items-center {
+    display: flex;
+    align-self: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-self-flex-start {
+    align-self: flex-start;
+}
+
+.content-wrapper {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.margin-right {
+    margin-right: 0.5rem;
+}
+
+.margin-left {
+    margin-left: 0.5rem;
+}

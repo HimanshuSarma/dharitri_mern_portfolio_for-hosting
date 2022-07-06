@@ -1,0 +1,17 @@
+.signup-form-input-label,
+.signup-form-input {
+    display: block;
+}
+
+.signup-form-input-label {
+    margin-bottom: 5px;
+}
+
+.signup-form-input {
+    margin-bottom: 10px;
+    width: 85%;
+}
+
+.signup-form-input:focus {
+    outline: none;
+}

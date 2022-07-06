@@ -1,0 +1,22 @@
+.photo-input {
+    grid-column: 1/-1;
+}
+
+.input-wrapper {
+    width: 85%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.signup-form-input {
+    width: 100%;
+}
+
+.input-eye-icon {
+    position: absolute;
+    top: -2px;
+    right: 0;
+    cursor: pointer;
+}

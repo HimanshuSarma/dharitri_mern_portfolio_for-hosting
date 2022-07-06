@@ -1,0 +1,25 @@
+.loading-spinner-anim {
+    animation-name: loading-spinner-animation;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+}
+
+@keyframes loading-spinner-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(180deg);
+    }
+    50% {
+        transform: rotate(360deg);
+    }
+    75% {
+        transform: rotate(540deg);
+    }
+    100% {
+        transform: rotate(720deg);
+    }
+}

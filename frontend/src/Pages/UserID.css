@@ -1,0 +1,42 @@
+.userid-page-whole-screen-wrapper {
+    width: 100%;
+}
+
+.userid-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userid-page-profile-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.userid-page-userprofilepic {
+    width: 80%;
+    max-width: 20rem;
+    height: auto;
+    border-radius: 5px;
+}
+
+.userid-page-username {
+    margin-top: 0.5rem;
+}
+
+.userid-page-phone {
+    margin-top: 0.25rem;
+}
+
+.userid-page-state {
+    margin-top: 0.25rem;
+}
+
+.userid-page-district,
+.userid-page-town_city {
+    margin-top: 0.15rem;
+}
+
+.userid-page-login-btn {
+    margin-top: 1rem;
+}

@@ -1,0 +1,98 @@
+.header-container {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+}
+
+.header-flex-container {
+    height: 17vh;
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.125);
+}
+
+.header-logo-container {
+    height: 100%;
+    width: fit-content;
+}
+
+.header-nav-btns-container {
+    display: flex;
+    align-items: center;
+    column-gap: 1.65rem;
+}
+
+.header-account-btn-container {
+    position: relative;
+}
+
+.user-account-card {
+    width: 200%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    position: absolute;
+    padding: 1rem;
+    opacity: 0;
+    right: 100%;
+    transform: scale(0);
+    background-color: wheat;
+    /* background-image: linear-gradient(to top right, var(--brown_hex) 45%, var(--light_brown_hex)); */
+    transition: opacity 0.5s, transform 0.35s, right 0.5s;
+}
+
+.show-user-account-card {
+    opacity: 1;
+    right: 0;
+    transform: scale(1);
+}
+
+.user-account-card-nav-btn {
+    display: block;
+    color: var(--dark_black_hex);
+}
+
+.user-account-logout-btn {
+    background: none;
+    border: none;
+}
+
+.header-logo {
+    width: auto;
+    height: 100%;
+}
+
+.header-nav-btn {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--dark_black_hex);
+}
+
+.account-nav-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.account-nav-btn::after {
+    content: "\276F";
+    display: block;
+    margin-left: 0.65rem;
+    margin-top: 0.15rem;
+    transform: rotate(90deg);
+}
+
+.account-nav-btn-icon {
+    align-self: flex-end;
+}
+
+.account-cart-logo {
+    width: 1rem;
+    height: auto;
+}
