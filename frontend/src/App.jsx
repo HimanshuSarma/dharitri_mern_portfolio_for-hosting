@@ -25,63 +25,6 @@ function App() {
 
   const isLoggedInState = useSelector(store => store.isLoggedInState);
 
-  const loadRazorpay = async () => {
-      return new Promise(resolve => {
-        const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-        script.onload = () => {
-          resolve(true);
-        }
-        
-        script.onerror = () => {
-          resolve(false);
-        }
-
-        document.body.appendChild(script);
-      })
-      
-  }
-
-  const displayRazorpay = async () => {
-
-      const res = await loadRazorpay();
-
-      if(res) {
-
-        const req = await fetch(`${base_url}/payment`, {method: 'POST'});
-
-        const reqData = await req.json();
-
-        console.log(reqData);
-
-        var options = {
-          key: "rzp_test_PcYZNPLdjfBmIN", // Enter the Key ID generated from the Dashboard
-          amount: reqData.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-          currency: reqData.currency,
-          name: reqData.name,
-          description: "Test Transaction",
-          image: "https://example.com/your_logo",
-          order_id: reqData.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-          handler: function (response){
-              alert(response.razorpay_payment_id);
-              alert(response.razorpay_order_id);
-              alert(response.razorpay_signature);
-              alert('Payment successful')
-          },
-          prefill: {
-              "name": "Gaurav Kumar",
-              "email": "gaurav.kumar@example.com",
-              "contact": "9999999999"
-          }
-        };
-
-        var rzp1 = new window.Razorpay(options);
-        rzp1.open();
-      } 
-
-      
-    }
-
   useEffect(() => {
     dispatch(checkUserLogin());
   }, []);
@@ -105,7 +48,6 @@ function App() {
           {isLoggedInState && <Route path='/*' element={<Navigate to='/products?page=1' />} />}
         </Routes> 
       </main>
-      {/* <button onClick={displayRazorpay}>Pay</button> */}
     </>
   );
 }

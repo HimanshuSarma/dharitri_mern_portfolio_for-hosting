@@ -55,6 +55,7 @@ app.post('/payment', async(req, res) => {
         receipt: 'App',
         payment_capture: 1
     });
+
     res.json(response);
 })
 
@@ -63,6 +64,29 @@ app.use('/user', UserRoutes.router);
 app.use('/products', ProductRoutes.router);
 
 app.use('/cart', userTokenVerification.router, CartRoutes.router);
+
+app.post('/payment-verify', (req, res) => {
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+
+    const crypto = require('crypto')
+
+    const shasum = crypto.createHmac('sha256', secret)
+    shasum.update(JSON.stringify(req.body))
+    const digest = shasum.digest('hex')
+
+    console.log(digest, req.headers['x-razorpay-signature'])
+
+    if (digest === req.headers['x-razorpay-signature']) {
+        console.log('request is legit')
+            // process it
+        res.json({ status: 'ok' });
+        require('fs').writeFileSync('payment1.json', JSON.stringify(req.body, null, 4))
+    } else {
+        // pass it
+        res.sendStatus(502);
+    }
+
+})
 
 __dirname = path.resolve();
 process.env.PWD = process.cwd();

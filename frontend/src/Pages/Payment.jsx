@@ -1,16 +1,20 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import ContentWrapper from '../Components/UIElements/ContentWrapper';
+import Backdrop from '../Components/UIElements/Backdrop';
+import LoadingSpinner from '../Components/UIElements/LoadingSpinner';
 
 import {getCart} from '../redux/ActionCreators/cartActions';
 import {getUserSelectedShippingAddress} from '../redux/ActionCreators/userActions';
+
+import { base_url } from '../Data/config';
 
 import './Payment.css';
 
 const Payment = () => {
 
   const {userSelectedShippingAddress} = useSelector(store => store.userSelectedShippingAddressState);
+  const [razorpaySdkLoading, setRazorpaySdkLoading] = useState(false);
   const {cart} = useSelector(store => store.cartState)
 
   const dispatch = useDispatch();
@@ -25,12 +29,77 @@ const Payment = () => {
     return price;
   }
 
+  const loadRazorpay = async () => {
+      setRazorpaySdkLoading(true);
+      return new Promise(resolve => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = () => {
+          resolve(true);
+          setRazorpaySdkLoading(false);
+        }
+        
+        script.onerror = () => {
+          resolve(false);
+          setRazorpaySdkLoading(false);
+        }
+
+        document.body.appendChild(script);
+      })
+      
+  }
+
+  const displayRazorpay = async () => {
+
+    const res = await loadRazorpay();
+
+    if(res) {
+
+      const req = await fetch(`${base_url}/payment`, {method: 'POST'});
+
+      const reqData = await req.json();
+
+      console.log(reqData);
+
+      var options = {
+        key: "rzp_test_PcYZNPLdjfBmIN", // Enter the Key ID generated from the Dashboard
+        amount: reqData.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: reqData.currency,
+        name: reqData.name,
+        description: "Test Transaction",
+        image: "https://example.com/your_logo",
+        order_id: reqData.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        handler: function (response){
+            alert(response.razorpay_payment_id);
+            alert(response.razorpay_order_id);
+            alert(response.razorpay_signature);
+            alert('Payment successful')
+        },
+        prefill: {
+            "name": "Gaurav Kumar",
+            "email": "gaurav.kumar@example.com",
+            "contact": "9999999999"
+        }
+      };
+
+      var rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } 
+
+
+  }
+
   useEffect(() => {
     dispatch(getCart());
     dispatch(getUserSelectedShippingAddress());
   }, []);
 
   return (
+    <>
+    {razorpaySdkLoading && 
+    <Backdrop>
+      <LoadingSpinner />
+    </Backdrop> }
     <div className='payment-page-whole-screen-wrapper'>
       <ContentWrapper>
         <h1 className='page-main-header'>
@@ -67,11 +136,12 @@ const Payment = () => {
         </div>}
 
         <div className='payment-page-pay-btns-wrapper flex'>
-          <button>Pay Now</button>
+          <button onClick={displayRazorpay}>Pay Now</button>
           <button>Pay on delivery</button>
         </div>
       </ContentWrapper>
     </div>
+    </>
   )
 }
 
