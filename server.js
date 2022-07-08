@@ -102,6 +102,9 @@ app.post('/payment-verify', async(req, res) => {
     console.log(digest, req.headers['x-razorpay-signature'])
 
     if (digest === req.headers['x-razorpay-signature']) {
+
+        console.log(req.body);
+
         const user = await CustomerSchema.find({ 'orders.orderID': req.body.payload.payment.entity.order_id });
 
         for (let i = 0; i < user.orders.length; i++) {
