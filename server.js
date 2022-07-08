@@ -105,6 +105,8 @@ app.post('/payment-verify', async(req, res) => {
 
         const user = await CustomerSchema.find({ 'orders.orderID': req.body.payload.payment.entity.order_id });
 
+        console.log(user);
+
         for (let i = 0; i < user.orders.length; i++) {
             if (user.orders[i].orderID === req.body.payload.payment.entity.order_id) {
                 user.orders[i].isPaid = true;
