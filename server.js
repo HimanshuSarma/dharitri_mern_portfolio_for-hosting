@@ -43,7 +43,10 @@ app.use(bodyParser.json({ limit: '50mb' }));
 
 app.use(cookieParser());
 
-app.post('/payment', async(req, res) => {
+app.post('/payment', userTokenVerification.router, async(req, res) => {
+
+    const userPayload = req.userPayload;
+
     const razorpay = new Razorpay({
         key_id: process.env.RAZORPAY_KEY_ID,
         key_secret: process.env.RAZORPAY_KEY_SECRET
@@ -80,7 +83,6 @@ app.post('/payment-verify', (req, res) => {
         console.log('request is legit')
             // process it
         res.json({ status: 'ok' });
-        require('fs').writeFileSync('payment1.json', JSON.stringify(req.body, null, 4))
     } else {
         // pass it
         res.sendStatus(502);
