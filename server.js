@@ -90,7 +90,7 @@ app.post('/payment', userTokenVerification.router, async(req, res) => {
 
 })
 
-app.post('/payment-verify', (req, res) => {
+app.post('/payment-verify', async(req, res) => {
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
 
     const crypto = require('crypto')
