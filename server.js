@@ -105,18 +105,18 @@ app.post('/payment-verify', async(req, res) => {
 
         console.log(req.body);
 
-        const user = await CustomerSchema.find({ 'orders.orderID': req.body.payload.payment.entity.order_id });
+        // const user = await CustomerSchema.find({ 'orders.orderID': req.body.payload.payment.entity.order_id });
 
-        for (let i = 0; i < user.orders.length; i++) {
-            if (user.orders[i].orderID === req.body.payload.payment.entity.order_id) {
-                user.orders[i].isPaid = true;
-                await user.save();
-                break;
-            } else if ((i === (user.orders.length - 1)) && user.orders[i].orderID !== req.body.payload.payment.entity.order_id) {
-                // Something is wrong. The orderId is not present in the user's orders array...
-                break;
-            }
-        }
+        // for (let i = 0; i < user.orders.length; i++) {
+        //     if (user.orders[i].orderID === req.body.payload.payment.entity.order_id) {
+        //         user.orders[i].isPaid = true;
+        //         await user.save();
+        //         break;
+        //     } else if ((i === (user.orders.length - 1)) && user.orders[i].orderID !== req.body.payload.payment.entity.order_id) {
+        //         // Something is wrong. The orderId is not present in the user's orders array...
+        //         break;
+        //     }
+        // }
         // process it
         res.status(200).json({ status: 'ok' });
     } else {
