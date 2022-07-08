@@ -44,6 +44,12 @@ app.use(bodyParser.json({ limit: '50mb' }));
 
 app.use(cookieParser());
 
+app.use('/user', UserRoutes.router);
+
+app.use('/products', ProductRoutes.router);
+
+app.use('/cart', userTokenVerification.router, CartRoutes.router);
+
 app.post('/payment', userTokenVerification.router, async(req, res) => {
 
     const userPayload = req.userPayload;
@@ -65,12 +71,16 @@ app.post('/payment', userTokenVerification.router, async(req, res) => {
 
         if (user.orders.length === 0) {
             user.orders.push({ orderID: response.id });
+            await user.save();
         } else {
             for (let i = 0; i < user.orders.length; i++) {
                 if (user.orders[i].orderID === response.id) {
                     console.log('Order already exists');
-                } else if (i === user.order.length - 1) {
+                    break;
+                } else if ((i === (user.orders.length - 1)) && user.orders[i].orderID !== response.id) {
                     user.orders.push({ orderID: response.id });
+                    await user.save();
+                    break;
                 }
             }
         }
@@ -79,12 +89,6 @@ app.post('/payment', userTokenVerification.router, async(req, res) => {
     }
 
 })
-
-app.use('/user', UserRoutes.router);
-
-app.use('/products', ProductRoutes.router);
-
-app.use('/cart', userTokenVerification.router, CartRoutes.router);
 
 app.post('/payment-verify', (req, res) => {
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
@@ -100,7 +104,7 @@ app.post('/payment-verify', (req, res) => {
     if (digest === req.headers['x-razorpay-signature']) {
         console.log('request is legit')
             // process it
-        res.json({ status: 'ok' });
+            // res.status(200).json({ status: 'ok' });
     } else {
         // pass it
         res.sendStatus(502);
