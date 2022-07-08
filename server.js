@@ -103,7 +103,9 @@ app.post('/payment-verify', async(req, res) => {
 
     if (digest === req.headers['x-razorpay-signature']) {
 
-        console.log(req.body.payload, 'webook');
+
+
+        console.log(req.body.payload.payment.entity.order_id, 'webook');
 
         // const user = await CustomerSchema.find({ 'orders.orderID': req.body.payload.payment.entity.order_id });
 
