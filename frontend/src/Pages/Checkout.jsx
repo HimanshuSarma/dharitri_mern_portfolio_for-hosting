@@ -53,6 +53,8 @@ const Checkout = () => {
   //   dispatch()
   // }, [userShippingAddress]);
 
+  console.log(userSelectedShippingAddress);
+
   return (
     <div className='checkout-page-whole-screen-wrapper'>
       <ContentWrapper>

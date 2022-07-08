@@ -55,11 +55,12 @@ const Payment = () => {
 
     if(res) {
 
-      const req = await fetch(`${base_url}/payment`, {method: 'POST'});
+      const req = await fetch(`${base_url}/payment`, {
+        method: 'POST',
+        credentials: 'include'
+      });
 
       const reqData = await req.json();
-
-      console.log(reqData);
 
       var options = {
         key: "rzp_test_PcYZNPLdjfBmIN", // Enter the Key ID generated from the Dashboard

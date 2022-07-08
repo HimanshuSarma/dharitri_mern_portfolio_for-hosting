@@ -153,6 +153,7 @@ router.post('/update-user-address', userVerification.router, async(req, res) => 
 router.get('/get-user-selected-cart', userVerification.router, async(req, res) => {
     const userPayload = req.userPayload;
     try {
+
         const user = await UserModels.CustomerSchema.findById(userPayload._id);
 
         if (user.selectedShippingAddress) {

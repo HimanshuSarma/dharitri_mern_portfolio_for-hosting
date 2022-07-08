@@ -25,14 +25,6 @@ export const createUserAction = (formState, changeUserDetailsValidity, changeWil
                     payload: userDetails
                 });
 
-                dispatch({
-                    type: 'NOT_AUTHENTICATED'
-                });
-
-                dispatch({
-                    type: 'CART_STATE_DELETE'
-                })
-
                 changeUserDetailsValidity(true);
                 changeWillNavigate(true);
             } else {
@@ -76,6 +68,10 @@ export const loginUserAction = (loginCredentials, setIsLoggedIn) => {
                 dispatch({type: 'USER_STATE_DELETE'});
 
                 dispatch({type: 'GET_CART_STATE'});
+
+                dispatch({type: 'USER_SHIPPING_ADDRESSES_STATE_DELETE'});
+
+                dispatch({type: 'USER_SELECTED_SHIPPING_ADDRESS_STATE_DELETE'})
                     
                 setIsLoggedIn(true);
 
@@ -128,6 +124,8 @@ export const userLogout = (setIsLogoutLoading) => {
                 });
 
                 dispatch({type: 'USER_SHIPPING_ADDRESSES_STATE_DELETE'});
+
+                dispatch({type: 'USER_SELECTED_SHIPPING_ADDRESS_STATE_DELETE'})
 
                 setIsLogoutLoading(false);
 

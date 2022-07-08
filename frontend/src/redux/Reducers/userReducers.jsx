@@ -56,6 +56,9 @@ export const userSelectedShippingAddressReducer = (currentUserSelectedShippingAd
         return {userSelectedShippingAddress: action.payload, isLoading: false,
                 userSelectedShippingAddressDataReceived: true
         };
+    } else if(action.type === 'USER_SELECTED_SHIPPING_ADDRESS_STATE_DELETE') {
+        return {userSelectedShippingAddress: null, isLoading: false, 
+                userSelectedShippingAddressDataReceived: false};
     }
 
     return currentUserSelectedShippingAddressState;

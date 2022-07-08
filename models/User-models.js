@@ -35,6 +35,9 @@ const CustomerSchema = mongoose.Schema({
 
         qty: { type: Number, required: true }
     }],
+    orders: [{
+        orderID: { type: String, required: true }
+    }],
     shippingAddresses: [{
         state: { type: String, required: true },
         district: { type: String, required: true },

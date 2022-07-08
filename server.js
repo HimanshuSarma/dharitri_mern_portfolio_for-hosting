@@ -13,6 +13,7 @@ const UserRoutes = require('./routes/User-routes');
 const ProductRoutes = require('./routes/Product-routes');
 const CartRoutes = require('./routes/Cart-routes');
 const userTokenVerification = require('./Verification/userTokenVerifications');
+const { CustomerSchema } = require('./models/User-models');
 
 const app = express();
 
@@ -47,19 +48,36 @@ app.post('/payment', userTokenVerification.router, async(req, res) => {
 
     const userPayload = req.userPayload;
 
-    const razorpay = new Razorpay({
-        key_id: process.env.RAZORPAY_KEY_ID,
-        key_secret: process.env.RAZORPAY_KEY_SECRET
-    });
+    const user = await CustomerSchema.findById(userPayload._id);
 
-    const response = await razorpay.orders.create({
-        amount: 5000,
-        currency: 'INR',
-        receipt: 'App',
-        payment_capture: 1
-    });
+    if (user) {
+        const razorpay = new Razorpay({
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET
+        });
 
-    res.json(response);
+        const response = await razorpay.orders.create({
+            amount: 5000,
+            currency: 'INR',
+            receipt: 'App',
+            payment_capture: 1
+        });
+
+        if (user.orders.length === 0) {
+            user.orders.push({ orderID: response.id });
+        } else {
+            for (let i = 0; i < user.orders.length; i++) {
+                if (user.orders[i].orderID === response.id) {
+                    console.log('Order already exists');
+                } else if (i === user.order.length - 1) {
+                    user.orders.push({ orderID: response.id });
+                }
+            }
+        }
+
+        res.json(response);
+    }
+
 })
 
 app.use('/user', UserRoutes.router);
