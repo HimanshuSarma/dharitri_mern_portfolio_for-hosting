@@ -124,12 +124,11 @@ app.post('/payment-verify', (req, res) => {
 })
 
 __dirname = path.resolve();
-process.env.PWD = process.cwd();
 
 if (process.env.ENVIRONMENT === 'production') {
-    app.use(express.static(path.join(process.env.PWD, 'frontend', 'build')));
+    app.use(express.static(path.join(process.cwd(), 'frontend', 'build')));
     app.use('*', (req, res) => {
-        res.sendFile(path.join(process.env.PWD, 'frontend', 'build', 'index.html'));
+        res.sendFile(path.join(process.cwd(), 'frontend', 'build', 'index.html'));
     })
 }
 
