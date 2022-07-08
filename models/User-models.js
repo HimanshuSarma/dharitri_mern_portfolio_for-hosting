@@ -36,7 +36,8 @@ const CustomerSchema = mongoose.Schema({
         qty: { type: Number, required: true }
     }],
     orders: [{
-        orderID: { type: String, required: true }
+        orderID: { type: String, required: true },
+        isPaid: { type: Boolean, required: false }
     }],
     shippingAddresses: [{
         state: { type: String, required: true },
