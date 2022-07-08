@@ -103,7 +103,7 @@ app.post('/payment-verify', async(req, res) => {
 
     if (digest === req.headers['x-razorpay-signature']) {
 
-        console.log(req.body);
+        console.log(req.body, 'webook');
 
         // const user = await CustomerSchema.find({ 'orders.orderID': req.body.payload.payment.entity.order_id });
 
@@ -118,7 +118,7 @@ app.post('/payment-verify', async(req, res) => {
         //     }
         // }
         // process it
-        res.status(200).json({ status: 'ok' });
+        res.json({ status: 'ok' });
     } else {
         // pass it
         res.sendStatus(502);
