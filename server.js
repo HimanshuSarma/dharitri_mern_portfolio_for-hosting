@@ -103,16 +103,16 @@ app.post('/payment-verify', async(req, res) => {
 
     if (digest === req.headers['x-razorpay-signature']) {
 
-        console.log(req.body.payload, 'webook');
+        console.log(req.body.payload.entity.id, 'webook');
 
-        // const user = await CustomerSchema.find({ 'orders.orderID': req.body.payload.payment.entity.order_id });
+        // const user = await CustomerSchema.find({ 'orders.orderID': req.body.payload.payment.entity.id });
 
         // for (let i = 0; i < user.orders.length; i++) {
-        //     if (user.orders[i].orderID === req.body.payload.payment.entity.order_id) {
+        //     if (user.orders[i].orderID === req.body.payload.payment.entity.id) {
         //         user.orders[i].isPaid = true;
         //         await user.save();
         //         break;
-        //     } else if ((i === (user.orders.length - 1)) && user.orders[i].orderID !== req.body.payload.payment.entity.order_id) {
+        //     } else if ((i === (user.orders.length - 1)) && user.orders[i].orderID !== req.body.payload.payment.entity.id) {
         //         // Something is wrong. The orderId is not present in the user's orders array...
         //         break;
         //     }
