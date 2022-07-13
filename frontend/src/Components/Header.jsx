@@ -9,7 +9,7 @@ import LoadingSpinner from './UIElements/LoadingSpinner';
 import {userLogout} from '../redux/ActionCreators/userActions';
 import {updateUserProductsPage} from '../redux/ActionCreators/userActions';
 
-import {base64logo} from '../assets/base64logo';
+import {cartLogo, base64logo} from '../../src/assets/base64images';
 
 const Header = () => {
 
@@ -83,10 +83,11 @@ const Header = () => {
               {!isLoggedInState && <NavLink to='/login' className='user-account-card-nav-btn'>Login</NavLink>}
               {!isLoggedInState && <NavLink to='/signup' className='user-account-card-nav-btn'>Don't have an account? Signup</NavLink>}
               {isLoggedInState && <button onClick={logoutHandler} className='user-account-logout-btn'>Logout</button>}
+              {isLoggedInState && <NavLink to='/orders' className='user-account-card-nav-btn'>View your orders</NavLink>}
             </div>
           </div>
           <NavLink to='/cart'>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAClElEQVRoge2Yz0tUURTHP/c5TsQwbhKCNGrTxkBaBv0BLWqrEGTuysoENzpt7FERiRRhhCWukjYatayVi7DaFQlZq8BKsx+LGJsanzqnRTx0ptF377wfvsX7LB6ce8+Z+X7fu/eeeQMJCQkJ24kqi86ePAbcI1XfRPMeyGYB1oAPCGN8L97Etle3QeemWGWRcBdoYnUF5hfc0TrgAIpBdu+8H7E+TyzvlA2InGDk+tGQtNREuQElpxE+U18PzU3VK4RTEejSRnlmjFw7gljTEWjRw+IQXbk366EXXRdfgPoUqih9nmwUDzoGlBKk9Dg0SSaU1I3KIb1NrOoeBi7GGJnhfN9U5aiegW+/nwMLnnmhooZQSipH9QzYdgmRR4Fr0meexuJEtQn9PiBqMjA5pgi3aLedalP6Bn4Up4EvQWkyYAlnx9hmk/oGbLuEkuhPI1Gj9Pb+3Gza7KcERL2MVknJ8FYJZga+Lj/zJcecCc7kPm6VYGbAtku+5JhSsv5rXJWYLqEomaK775VXUnwNWCXPuw9xNSC8Z9F5qpMaTwOWDOnutzgaWGQl80A3OW4G5hHppKdnWbcg5fsrz+W83+pCJG5PwJhaDCyVRcODzcFIqY1aDMyWRSkZ5c7VvcHIMcd8/Y4MdiNyOwQt6xjsK/MnsOvPKPDauC4kzA202w5r6jgxMVHbKXShf4HG4mGgG1EvgV+BqjLA9xl+sK0tnc0vXxFUByAC44WG9MDbycmq77BB1br4bmSZvHNZUH1urKA/k3cAcmHWuvhuZIp/f/bub2llX0urO9YZdq1LEJ1Yyi+AsBZBLRCAAYFxgLnZGebezbifOh52rYvvPVBoSA9k8g4KOlxRhWz6Uti1CQkJCfHgL5gc0zcZwFXWAAAAAElFTkSuQmCC"/>
+            <img src={cartLogo}/>
           </NavLink>
         </div>
       </div>

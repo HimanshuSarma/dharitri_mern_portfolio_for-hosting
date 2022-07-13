@@ -5,7 +5,7 @@ import './Backdrop.css';
 const Backdrop = (props) => {
 
   return (
-    <div style={{
+    <div onClick={() => props.setSelectShippingAddressMessage(null)} style={{
         position: 'fixed',
         zIndex: '200',
         top: '0',

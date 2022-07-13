@@ -11,7 +11,11 @@ const FormInput = ({htmlFor, label, value, property, type, setFormState, setForm
             <input value={property !== 'photo' ? value : undefined} 
                 onChange={(event) => {
                 if(property !== 'photo') {
-                    setFormState((formState) => {return {...formState, [property]: event.target.value}});
+                    if(type === 'number') {
+                        setFormState((formState) => {return {...formState, [property]: parseInt(event.target.value)}})
+                    } else {
+                        setFormState((formState) => {return {...formState, [property]: event.target.value}});
+                    }
                 } else if(property === 'photo') {
                     if(event.target.files[0].type === 'image/jpeg' || event.target.files[0].type === 'image/png' || 
                     event.target.files[0].type === 'image/avif' || event.target.files[0].type === 'image/gif') {
@@ -20,7 +24,7 @@ const FormInput = ({htmlFor, label, value, property, type, setFormState, setForm
                     } else {
                         // Write logic to inform the user that the selected file is not an image file of the reqd types...
                     }
-                }
+                } 
             }} className={property !== 'photo' ? 'signup-form-input form-input' : ''} type={type}
             
             accept={property === 'photo' ? accept : null}

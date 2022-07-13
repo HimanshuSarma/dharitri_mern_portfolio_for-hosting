@@ -1,0 +1,22 @@
+.white-message-card {
+    position: relative;
+    background-color: white;
+    padding: 2.5rem 3rem;
+    border-radius: 10px;
+}
+
+.white-message-card-close {
+    content: "";
+    position: absolute;
+    background-color: rgb(179, 175, 175);
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

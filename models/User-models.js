@@ -37,6 +37,16 @@ const CustomerSchema = mongoose.Schema({
     }],
     orders: [{
         orderID: { type: String, required: true },
+        orderItems: [{
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'Product'
+            },
+
+            qty: { type: Number, required: true }
+        }],
+
         isPaid: { type: Boolean, required: false }
     }],
     shippingAddresses: [{

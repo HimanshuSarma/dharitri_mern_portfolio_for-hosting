@@ -64,6 +64,34 @@ export const userSelectedShippingAddressReducer = (currentUserSelectedShippingAd
     return currentUserSelectedShippingAddressState;
 }
 
+export const userOrderDetailsReducer = (currentUserOrderDetails = {userOrderID: null, isOrderPaid: null, 
+    isUserOrderDetailsLoading: false, userOrderDetailsDataReceived: false}, action) => {
+
+        if(action.type === 'UPDATE_USER_ORDER_ID') {  
+            return {userOrderID: action.payload, isOrderPaid: null, isUserOrderDetailsLoading: false, 
+                userOrderDetailsDataReceived: true};
+        } else if(action.type === 'USER_PAYMENT_STATUS_LOADING') {
+            return {...currentUserOrderDetails, isOrderPaid: null, isUserOrderDetailsLoading: true,
+                userOrderDetailsDataReceived: false};
+        } else if(action.type === 'USER_PAYMENT_STATUS_LOADED') {
+            return {...currentUserOrderDetails, isOrderPaid: action.payload, isUserOrderDetailsLoading: false,
+                userOrderDetailsDataReceived: true};
+        }
+
+        return currentUserOrderDetails;
+}
+
+// export const userOrdersReducer = (currentUserOrdersState = {userOrders: null, isUserOrdersLoading: false,
+//     userOrdersDataReceived: false}, action) => {
+//         if(action.type === 'USER_ORDERS_LOADING') {
+//             return {...currentUserOrdersState, isUserOrdersLoading: true, userOrdersDataReceived: false};
+//         } else if(action.type === 'USER_ORDERS_LOADED') {
+//             return {userOrders: action.payload, isUserOrdersLoading: false, userOrdersDataReceived: true};
+//         }
+
+//     return currentUserOrdersState;
+// }
+
 export const userLoginReducer = (currentIsLoggedInState = false, action) => {
     if(action.type === 'AUTHENTICATING' || action.type === 'NOT_AUTHENTICATED' || action.type === 'AUTHENTICATION_FAILED') {
         return false;

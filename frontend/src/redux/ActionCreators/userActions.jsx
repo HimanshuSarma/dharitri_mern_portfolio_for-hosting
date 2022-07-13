@@ -38,7 +38,7 @@ export const createUserAction = (formState, changeUserDetailsValidity, changeWil
 }
 
 
-export const loginUserAction = (loginCredentials, setIsLoggedIn) => {
+export const loginUserAction = (loginCredentials, setIsLoggedIn, setLoginMessageHandler) => {
     return async (dispatch, getState) => {
 
         dispatch({type: 'AUTHENTICATING'});
@@ -93,7 +93,8 @@ export const loginUserAction = (loginCredentials, setIsLoggedIn) => {
             } else {
                 if(loginUserRequest.status === 401) {
                     dispatch({type: 'NOT_AUTHENTICATED'});
-                    dispatch({type: 'USER_STATE_LOAD_FAILED'})
+                    dispatch({type: 'USER_STATE_LOAD_FAILED'});
+                    setLoginMessageHandler(loginUserRequestDataReceived.message);
                 }
             }
         } catch (err) {
@@ -266,6 +267,64 @@ export const getUserSelectedShippingAddress = () => {
             }
 
         } catch(err) {
+            console.log(err);
+        }
+    }
+}
+
+export const getUserPaymentStatus = (orderID) => {
+    return async(dispatch, getState) => {
+        dispatch({
+            type: 'USER_PAYMENT_STATUS_LOADING',
+        });
+
+        try {
+            const getUserPaymentStatusReq = await fetch(`${base_url}/user/payment-status/${orderID}`, {
+                method: 'GET',
+                credentials: 'include'
+            })
+
+            const getUserPaymentStatusReqData = await getUserPaymentStatusReq.json();
+
+            if(getUserPaymentStatusReq.ok) {
+                dispatch({
+                    type: 'USER_PAYMENT_STATUS_LOADED',
+                    payload: getUserPaymentStatusReqData.payload
+                });
+            } 
+        } catch(err) {
+            console.log(err);
+        }
+    }
+}
+
+export const getUserOrders = (setUserOrders, setIsUserOrdersLoading) => {
+    return async(dispatch, getState) => {
+        dispatch({
+            type: 'USER_ORDERS_LOADING'
+        })
+
+        try {
+            const getUserOrdersReq = await fetch(`${base_url}/user/get-orders`, {
+                method: 'GET',
+                credentials: 'include'
+            });
+
+            const getUserOrdersReqData = await getUserOrdersReq.json();
+
+            if(getUserOrdersReq.ok) {
+                // dispatch({
+                //     type: 'USER_ORDERS_LOADED',
+                //     payload: getUserOrdersReqData.payload
+                // })
+
+                setUserOrders(getUserOrdersReqData.payload);
+                setIsUserOrdersLoading(false);
+            } else {
+                
+            }
+
+        } catch (err) {
             console.log(err);
         }
     }

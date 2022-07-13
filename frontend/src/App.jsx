@@ -11,9 +11,8 @@ import Cart from './Pages/Cart';
 import Subscriptions from './Pages/Subscriptions';
 import Checkout from './Pages/Checkout';
 import Payment from './Pages/Payment';
+import Orders from './Pages/Orders';
 import NotFound from './Pages/NotFound';
-
-import {base_url} from './Data/config';
 
 import {checkUserLogin} from './redux/ActionCreators/userActions';
 // import {getUserDefaultProductsPage} from './redux/ActionCreators/userActions';
@@ -36,14 +35,15 @@ function App() {
         <Routes>
           {!isLoggedInState && <Route path='/signup' element={<Signup />} />}
           <Route path='/userID' element={<UserID />} />
-          <Route path='/login' element={<Login />} />
+          {!isLoggedInState && <Route path='/login' element={<Login />} />}
           <Route path='/products' element={<Products />} />
           <Route path='/product/:productID' element={<ProductScreen />} />
           <Route path='/cart' element={<Cart />} />
-          <Route path='/subscriptions' element={<Subscriptions />} />
+          {isLoggedInState && <Route path='/subscriptions' element={<Subscriptions />} />}
           <Route path='/not-found' element={<NotFound />} />
-          <Route path='/checkout' element={<Checkout />} />
-          <Route path='/payment' element={<Payment />} />
+          {isLoggedInState && <Route path='/checkout' element={<Checkout />} />}
+          {isLoggedInState && <Route path='/payment' element={<Payment />} />}
+          {isLoggedInState && <Route path='/orders' element={<Orders /> } />}
           {!isLoggedInState && <Route path='/*' element={<Navigate to='/signup' />} />}
           {isLoggedInState && <Route path='/*' element={<Navigate to='/products?page=1' />} />}
         </Routes> 

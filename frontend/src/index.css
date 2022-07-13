@@ -118,7 +118,8 @@ img {
     margin-bottom: 1.5rem;
 }
 
-.success-message {
+.success-message,
+.failure-message {
     padding: 0.5rem;
     color: wheat;
 }

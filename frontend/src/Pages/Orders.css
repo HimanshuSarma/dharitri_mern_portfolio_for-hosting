@@ -1,0 +1,54 @@
+.orders-page-whole-screen-wrapper {
+    width: 100%;
+}
+
+.orders-page-order-wrapper {
+    padding: 1rem 0.5rem;
+    background-color: rgba(215, 210, 210, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    gap: 10px;
+    margin-bottom: 2.5rem;
+}
+
+.orders-page-order-item-wrapper {
+    position: relative;
+    width: 100%;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.orders-page-order-item-wrapper:last-of-type::after {}
+
+.orders-page-order-item-product-image {
+    width: 20%;
+    aspect-ratio: 2/1.35;
+    border-radius: 10px;
+}
+
+.orders-page-order-item-product-description {
+    width: 80%;
+}
+
+.orders-page-order-item-description-btns-wrapper {
+    align-items: flex-end;
+}
+
+.orders-page-order-item-description-price {
+    justify-content: flex-end;
+}
+
+.orders-page-order-total-price-wrapper {
+    position: relative;
+}
+
+.orders-page-order-total-price {
+    margin-left: auto;
+}
+
+.orders-page-order-price-separator {
+    margin: 0.5rem 0 0.3rem 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(215, 210, 210, 1);
+}

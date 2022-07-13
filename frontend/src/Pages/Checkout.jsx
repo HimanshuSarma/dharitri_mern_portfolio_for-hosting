@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import ContentWrapper from '../Components/UIElements/ContentWrapper';
 import {shippingAddressFormInputs, signupFormInputs} from '../Data/FormInputs';
 import FormInput from '../Components/UIElements/FormInput';
+
+import Backdrop from '../Components/UIElements/Backdrop';
+import WhiteMessageCard from '../Components/UIElements/WhiteMessageCard';
 
 import {getUserShippingAddress, updateUserShippingAddress, getUserShippingAddresses} from '../redux/ActionCreators/userActions';
 import {getCart} from '../redux/ActionCreators/cartActions';
@@ -22,6 +25,7 @@ const Checkout = () => {
     house_number: '',
     pincode: ''
   });
+  const [selectShippingAddressMessage, setSelectShippingAddressMessage] = useState(null);
 
   const {userShippingAddresses} = useSelector(store => store.userShippingAddressesState);
   const {userShippingAddress} = useSelector(store => store.userShippingAddressState);
@@ -29,6 +33,7 @@ const Checkout = () => {
   const {cart} = useSelector(store => store.cartState);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const calcTotalPriceHandler = () => {
     let price = 0;
@@ -53,10 +58,14 @@ const Checkout = () => {
   //   dispatch()
   // }, [userShippingAddress]);
 
-  console.log(userSelectedShippingAddress);
-
   return (
     <div className='checkout-page-whole-screen-wrapper'>
+      {selectShippingAddressMessage && 
+      <Backdrop setSelectShippingAddressMessage={setSelectShippingAddressMessage}>
+        <WhiteMessageCard style={{}} setSelectShippingAddressMessage={setSelectShippingAddressMessage}>
+          <h3>{selectShippingAddressMessage}</h3>
+        </WhiteMessageCard>
+      </Backdrop>}
       <ContentWrapper>
         {cart && cart.length > 0 && 
         <div className='checkout-page-flex-wrapper flex'>
@@ -166,9 +175,12 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <NavLink to='/payment' className='checkout-btn rounded-dark-green-background-white-text-btn'>
+              <button onClick={() => {
+                  if(userSelectedShippingAddress) navigate('/payment');
+                  else setSelectShippingAddressMessage('Please select a shipping address');
+                }} className='checkout-btn rounded-dark-green-background-white-text-btn'>
                 Proceed to checkout
-              </NavLink>
+              </button>
           </div>
         </div>}
       </ContentWrapper>

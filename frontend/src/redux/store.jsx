@@ -6,7 +6,8 @@ import {productListReducer, productReducer, productsCountInDBReducer} from './Re
 
 import {userReducer,
     userLoginReducer, updateUserProductsPageReducer, userSelectedShippingAddressReducer,
-    userShippingAddressesReducer, userShippingAddressReducer,autoLogoutTimerIDReducer
+    userShippingAddressesReducer, userShippingAddressReducer,autoLogoutTimerIDReducer,
+    userOrderDetailsReducer
 } from './Reducers/userReducers';
 
 import {cartReducer} from './Reducers/cartReducers';
@@ -16,6 +17,8 @@ const reducer = combineReducers({
     userShippingAddressesState: userShippingAddressesReducer,
     userShippingAddressState: userShippingAddressReducer,
     userSelectedShippingAddressState: userSelectedShippingAddressReducer,
+    userOrderDetails: userOrderDetailsReducer,
+    // userOrdersState: userOrdersReducer,
     isLoggedInState: userLoginReducer,
     autoLogoutTimerIDState: autoLogoutTimerIDReducer,
     productListState: productListReducer,

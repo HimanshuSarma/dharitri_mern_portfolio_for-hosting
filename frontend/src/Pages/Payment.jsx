@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import { useNavigate, NavLink } from 'react-router-dom';
 import ContentWrapper from '../Components/UIElements/ContentWrapper';
 import Backdrop from '../Components/UIElements/Backdrop';
 import LoadingSpinner from '../Components/UIElements/LoadingSpinner';
 
 import {getCart} from '../redux/ActionCreators/cartActions';
-import {getUserSelectedShippingAddress} from '../redux/ActionCreators/userActions';
+import {getUserSelectedShippingAddress, getUserPaymentStatus} from '../redux/ActionCreators/userActions';
 
 import { base_url } from '../Data/config';
 
@@ -13,11 +14,15 @@ import './Payment.css';
 
 const Payment = () => {
 
-  const {userSelectedShippingAddress} = useSelector(store => store.userSelectedShippingAddressState);
   const [razorpaySdkLoading, setRazorpaySdkLoading] = useState(false);
-  const {cart} = useSelector(store => store.cartState)
+  const [loadPaymentStatus, setLoadPaymentStatus] = useState(false);
+
+  const {userSelectedShippingAddress} = useSelector(store => store.userSelectedShippingAddressState);
+  const {userOrderID, isOrderPaid} = useSelector(store => store.userOrderDetails);
+  const {cart} = useSelector(store => store.cartState);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const calcTotalPriceHandler = () => {
     let price = 0;
@@ -71,10 +76,11 @@ const Payment = () => {
         image: "https://example.com/your_logo",
         order_id: reqData.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         handler: function (response){
-            alert(response.razorpay_payment_id);
-            alert(response.razorpay_order_id);
-            alert(response.razorpay_signature);
-            alert('Payment successful')
+          setLoadPaymentStatus(true);
+          dispatch({
+            type: 'UPDATE_USER_ORDER_ID',
+            payload: response.razorpay_order_id
+          });
         },
         prefill: {
             "name": "Gaurav Kumar",
@@ -94,6 +100,14 @@ const Payment = () => {
     dispatch(getCart());
     dispatch(getUserSelectedShippingAddress());
   }, []);
+
+  useEffect(() => {
+    if(!isOrderPaid && userOrderID) {
+      setTimeout(() => {
+        dispatch(getUserPaymentStatus(userOrderID)); 
+      }, 2000);
+    }
+  }, [loadPaymentStatus, isOrderPaid, userOrderID]);
 
   return (
     <>
@@ -134,12 +148,27 @@ const Payment = () => {
 
             <p className='payment-page-total-price'>{`Total: $${calcTotalPriceHandler()}`}</p>
           </div>
+
+          <div>
+            {userOrderID && !isOrderPaid &&
+              <h3>
+                Order payment processing...
+              </h3>
+            }
+
+            {userOrderID && isOrderPaid &&
+              <h3>
+                Payment successfull...
+              </h3>
+            }
+          </div>
         </div>}
 
         <div className='payment-page-pay-btns-wrapper flex'>
           <button onClick={displayRazorpay}>Pay Now</button>
           <button>Pay on delivery</button>
-        </div>
+          <NavLink to='/orders'>View your orders</NavLink>
+        </div>        
       </ContentWrapper>
     </div>
     </>
