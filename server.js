@@ -63,7 +63,7 @@ app.post('/payment', userTokenVerification.router, async(req, res) => {
         let cartTotal = 0;
 
         for (let i = 0; i < user.cart.length; i++) {
-            cartTotal += user.cart[i].product.price;
+            cartTotal += (user.cart[i].qty * user.cart[i].product.price);
         }
 
         if (user) {

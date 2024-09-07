@@ -7,6 +7,8 @@ export const editCart = (payload, navigateHandler, getCartItemQty, setMessageHan
             type: 'CART_STATE_LOADING'
         });
 
+        console.log('editCartRequest2');
+
         try {
              
             const editCartRequest = await fetch(`${base_url}/cart/patch-cart`, {
@@ -17,6 +19,8 @@ export const editCart = (payload, navigateHandler, getCartItemQty, setMessageHan
                 credentials: 'include',
                 body: JSON.stringify({product: payload, operation})
             })
+
+            console.log('editCartRequest1', editCartRequest);
 
             const editCartRequestDataReceived = await editCartRequest.json();
 
@@ -71,6 +75,7 @@ export const editCart = (payload, navigateHandler, getCartItemQty, setMessageHan
 
 export const getCart = (setMessageHandlerOptionalArg, messageOptional) => {
     return async (dispatch, getState) => {
+        console.log('action')
         dispatch({
             type: 'CART_STATE_LOADING'
         })
@@ -208,6 +213,56 @@ export const deleteCartItem = (productID, setMessageHandler) => {
                         type: 'USER_STATE_DELETE' // Clear the user data since user is not authenticated...
                     })
                 } else if(deleteCartItemReq.status === 404 || deleteCartItemReq.status === 500) {
+                    dispatch({
+                        type: 'DELETE_CART_ITEM_FAILED'
+                    })
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
+
+export const deleteCart = () => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: 'CART_STATE_DELETE_LOADING'
+        });
+
+        try {
+            const deleteCartReq = await fetch(`${base_url}/cart/delete-cart`, {
+                method: 'DELETE',
+                credentials: 'include'
+            })
+
+            const deleteCartReqData = await deleteCartReq.json();
+
+            if(deleteCartReqData.ok) {
+                // Passing the optional message handler...
+                dispatch({
+                    type: 'CART_STATE_DELETE'
+                });
+            } else {
+                // 401 error for authentication failed...
+                // 404 error for cart item not found...
+                // 500 error for some other error...
+
+                if(deleteCartReqData.status === 401) {
+                    dispatch({
+                        type: 'CART_STATE_DELETE' // Delete the cart state when user is not authenticated...
+                    });
+
+                    dispatch({
+                        type: 'NOT_AUTHENTICATED' // Set is isLoggedIn redux state to false and make the user state
+                                                 // NOT AUTHENTICATED...
+                    });
+
+                    dispatch({
+                        type: 'USER_STATE_DELETE' // Clear the user data since user is not authenticated...
+                    })
+                } else if(deleteCartReqData.status === 404 || deleteCartReqData.status === 500) {
                     dispatch({
                         type: 'DELETE_CART_ITEM_FAILED'
                     })

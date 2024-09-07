@@ -54,6 +54,7 @@ const Cart = () => {
   }
 
   useEffect(() => {
+    console.log(isLoggedInState, getCartState, 'not working')
     if(isLoggedInState && getCartState) {
       dispatch(getCart());
     }

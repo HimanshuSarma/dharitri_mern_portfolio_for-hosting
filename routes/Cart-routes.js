@@ -113,6 +113,25 @@ router.delete('/delete-cart-item/:productID', async(req, res, next) => {
         console.log(err);
         res.status(500).json({ message: 'Some error occured. Please try again' });
     }
+});
+
+
+router.delete('/delete-cart', async(req, res, next) => {
+    try {
+        const userPayload = req.userPayload;
+        let userDocument = await UserSchema.CustomerSchema.findById(userPayload._id);
+
+        if (!userDocument) {
+            return res.status(401).clearCookie('jwt').json({ message: 'User not found' });
+        }
+
+        userDocument.cart = [];
+        await userDocument.save();
+        res.status(200).json({ message: 'Product deleted from cart' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Some error occured. Please try again' });
+    }
 })
 
 

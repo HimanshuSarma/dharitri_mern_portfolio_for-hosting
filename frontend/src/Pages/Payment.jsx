@@ -5,8 +5,9 @@ import ContentWrapper from '../Components/UIElements/ContentWrapper';
 import Backdrop from '../Components/UIElements/Backdrop';
 import LoadingSpinner from '../Components/UIElements/LoadingSpinner';
 
-import {getCart} from '../redux/ActionCreators/cartActions';
+import {getCart, deleteCart} from '../redux/ActionCreators/cartActions';
 import {getUserSelectedShippingAddress, getUserPaymentStatus} from '../redux/ActionCreators/userActions';
+import { calcTotalPriceHandler } from '../utils/computeCartPrice'
 
 import { base_url } from '../Data/config';
 
@@ -23,16 +24,6 @@ const Payment = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const calcTotalPriceHandler = () => {
-    let price = 0;
-    
-    for(let i = 0; i < cart.length; i++) {
-      price += cart[i].product.price;
-    }
-
-    return price;
-  }
 
   const loadRazorpay = async () => {
       setRazorpaySdkLoading(true);
@@ -68,7 +59,7 @@ const Payment = () => {
       const reqData = await req.json();
 
       var options = {
-        key: "rzp_test_PcYZNPLdjfBmIN", // Enter the Key ID generated from the Dashboard
+        key: "rzp_test_mtStAqKNFgh6Un", // Enter the Key ID generated from the Dashboard
         amount: reqData.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: reqData.currency,
         name: reqData.name,
@@ -106,6 +97,14 @@ const Payment = () => {
       setTimeout(() => {
         dispatch(getUserPaymentStatus(userOrderID)); 
       }, 2000);
+    } else if (isOrderPaid && userOrderID) {
+      setTimeout(() => {
+        dispatch(deleteCart());
+        dispatch({
+          type: 'USER_PAYMENT_STATUS_DELETE'
+        });
+        navigate('/products?page=1')
+      }, 5000)
     }
   }, [loadPaymentStatus, isOrderPaid, userOrderID]);
 
@@ -130,7 +129,7 @@ const Payment = () => {
             </h3>
           </div>
 
-          <div className='payment-page-content-wrapper flex-column'>
+          {cart?.length > 0 ? <div className='payment-page-content-wrapper flex-column'>
             <h3 className='payment-page-secondary-header font-wt-400'>Products: </h3>
             {cart.map((cartItem, index) => {
               return (
@@ -146,8 +145,8 @@ const Payment = () => {
               )
             })}
 
-            <p className='payment-page-total-price'>{`Total: $${calcTotalPriceHandler()}`}</p>
-          </div>
+            <p className='payment-page-total-price'>{`Total: $${calcTotalPriceHandler(cart)}`}</p>
+          </div> : null}
 
           <div>
             {userOrderID && !isOrderPaid &&
@@ -158,7 +157,7 @@ const Payment = () => {
 
             {userOrderID && isOrderPaid &&
               <h3>
-                Payment successfull...
+                Payment successfull, redirecting...
               </h3>
             }
           </div>
@@ -166,7 +165,7 @@ const Payment = () => {
 
         <div className='payment-page-pay-btns-wrapper flex'>
           <button onClick={displayRazorpay}>Pay Now</button>
-          <button>Pay on delivery</button>
+          {/* <button>Pay on delivery</button> */}
           <NavLink to='/orders'>View your orders</NavLink>
         </div>        
       </ContentWrapper>

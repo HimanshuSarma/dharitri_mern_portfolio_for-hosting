@@ -10,6 +10,7 @@ import WhiteMessageCard from '../Components/UIElements/WhiteMessageCard';
 
 import {getUserShippingAddress, updateUserShippingAddress, getUserShippingAddresses} from '../redux/ActionCreators/userActions';
 import {getCart} from '../redux/ActionCreators/cartActions';
+import { calcTotalPriceHandler } from '../utils/computeCartPrice'
 
 import './Checkout.css';
 
@@ -35,15 +36,6 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const calcTotalPriceHandler = () => {
-    let price = 0;
-    
-    for(let i = 0; i < cart.length; i++) {
-      price += cart[i].product.price;
-    }
-
-    return price;
-  }
 
   useEffect(() => {
     if(!cart) {
@@ -171,7 +163,7 @@ const Checkout = () => {
 
                 <div className='checkout-page-payment-total-wrapper flex'>
                   <h3 className='font-wt-500'>Total: </h3>
-                  <h3>{`$${calcTotalPriceHandler()}`}</h3>
+                  <h3>{`$${calcTotalPriceHandler(cart)}`}</h3>
                 </div>
               </div>
 

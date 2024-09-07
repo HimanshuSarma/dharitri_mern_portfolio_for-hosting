@@ -76,6 +76,9 @@ export const userOrderDetailsReducer = (currentUserOrderDetails = {userOrderID: 
         } else if(action.type === 'USER_PAYMENT_STATUS_LOADED') {
             return {...currentUserOrderDetails, isOrderPaid: action.payload, isUserOrderDetailsLoading: false,
                 userOrderDetailsDataReceived: true};
+        } else if(action.type === 'USER_PAYMENT_STATUS_DELETE') {
+            return {...currentUserOrderDetails, userOrderID: null, isOrderPaid: null, 
+                isUserOrderDetailsLoading: false, userOrderDetailsDataReceived: false}
         }
 
         return currentUserOrderDetails;

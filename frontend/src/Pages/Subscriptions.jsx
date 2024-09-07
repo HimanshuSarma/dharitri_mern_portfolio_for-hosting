@@ -46,7 +46,7 @@ const Subscriptions = () => {
                 </div>
             </div>
 
-            <div className='subscription-plan-wrapper flex'>
+            {/* <div className='subscription-plan-wrapper flex'>
                 <div className='subscription-plan-text-wrapper'>
                   <h3 className='subscription-plan-pricing-caption'>Subscription plan for 2 month</h3>
                   <div className='subscription-plan-pricing-2-month'>
@@ -70,7 +70,7 @@ const Subscriptions = () => {
                 <div className='subscription-plan-buy-wrapper'>
                   <NavLink to='/checkout'>Buy Now</NavLink>
                 </div>
-            </div>
+            </div> */}
         </ContentWrapper>}
 
         {!isLoggedIn && 
